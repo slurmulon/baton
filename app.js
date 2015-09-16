@@ -7,6 +7,8 @@ import favicon      from 'serve-favicon'
 import cookieParser from 'cookie-parser'
 import bodyParser   from 'body-parser'
 
+import emoji from 'node-emoji'
+
 import * as baton from './lib/src/baton'
 
 //   ____             __ _       
@@ -16,7 +18,7 @@ import * as baton from './lib/src/baton'
 //  \____\___/|_| |_|_| |_|\__, |
 //                         |___/
  
-const app = express()
+const app  = express()
 const port = process.env.PORT || 3000
 
 app.set('views', path.join(__dirname, 'views'))
@@ -24,13 +26,13 @@ app.set('view engine', 'jade')
 
 // app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // response format
-function slackMsg(text: String, status: String = '200') { return {status, text: `[baton] ${text}`} }
-function slackErr(text: String, status: String = '400') { return {status, text: `[baton:ERROR:${status}] ${text}`} }
+function slackMsg(text: String) { return {text: emoji.emojify('[:sparkles: baton] ' + text)} }
+function slackErr(text: String) { return {text: emoji.emojify('[ :bomb: baton] '    + text)} }
 
 //  ____             _            
 // |  _ \ ___  _   _| |_ ___  ___ 
@@ -49,24 +51,34 @@ app.get('/v1/batons', (req, res) => {
       res.send(btns.map(b => b.doc))
     })
     .catch(err => {
-      res.send(slackErrMsg(err))
+      res.status(500).send(slackErrMsg(err))
     })
 })
 
 app.post('/v1/batons', (req, res) => {
   baton.pass(req.body)
     .then(btn => {
-      res.send(slackMsg('✨ Created new baton!: ' + btn.label + ' ' + btn.link))
+      res.send(slackMsg('Passed a baton!: ' + btn.label + ' ' + btn.link))
     })
     .catch(err => {
-      res.send(slackErr(err))
+      res.status(500).send(slackErr(err))
+    })
+})
+
+app.get('v1/batons/search', (req, res) => {
+  baton.search()
+    .then(btsn => {
+      res.send(btsn.map(b => b.doc))
+    })
+    .catch(err => {
+      res.status(500).send(slackErrMsg(err))
     })
 })
 
 app.delete('/v1/batons/:id', (req, res) => {
   baton.drop(req.params.id)
 
-  res.send(204)
+  res.status(204).send()
 })
 
 app.get('/v1/help/:cmd', (req, res) => {
@@ -94,20 +106,12 @@ app.use((req, res, next) => {
 
 if (app.get('env') === 'development') {
   app.use((err, req, res, next) => {
-    res.status(err.status || 500)
-    // res.render('error', {
-    //   message: err.message,
-    //   error: err
-    // })
+    res.status(err.status || 500).send(err.message)
   })
 }
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500)
-  res.send({
-    message: err.message,
-    error: {}
-  })
 })
 
 // export
