@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 app.get('/v1/batons', (req, res) => {
   baton.all()
     .then(btns => {
-      res.send(btns.map(b => b.doc))
+      res.send(btns)
     })
     .catch(err => {
       res.status(500).send(slackErrMsg(err))
