@@ -65,10 +65,10 @@ app.post('/v1/batons', (req, res) => {
     })
 })
 
-app.get('v1/batons/search', (req, res) => {
-  baton.search()
+app.get('/v1/batons/search', (req, res) => {
+  baton.search({label: req.params.label, tags: req.params.tags})
     .then(btsn => {
-      res.send(btsn.map(b => b.doc))
+      res.send(btsn)
     })
     .catch(err => {
       res.status(500).send(slackErrMsg(err))
