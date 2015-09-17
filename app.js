@@ -44,27 +44,21 @@ app.get('/v1/batons', (req, res) => {
   baton.all()
     .then(btns => res.json(btns.map(btn => slack.item(req, btn))))
     .then(btns => res.json(btns))
-    .catch(err => res.status(500).send(slack.err(err)))
+    .catch(err => res.status(500).send(slack.err(req, err)))
 })
 
 app.post('/v1/batons', (req, res) => {
-  let newBaton = req.body
+  console.log('[baton] Passing new baton...', req.body)
 
-  if ('slack' in req.query) {
-    newBaton = slack.cmd(req)
-  }
-
-  console.log('[baton] Passing new baton...', newBaton)
-
-  baton.pass(newBaton)
+  baton.pass(req.body)
     .then(btn  => res.json(slack.resp(req, 'Passed a baton!: ' + btn.label + ' ' + btn.link, 'sparkles')))
-    .catch(err => res.status(500).json(slack.err(err)))
+    .catch(err => res.status(500).json(slack.err(req, err)))
 })
 
 app.get('/v1/batons/find', (req, res) => {
   baton.find({label: req.params.label, tags: req.params.tags})
     .then(btsn => res.json(btsn))
-    .catch(err => res.status(500).json(slack.err(err)))
+    .catch(err => res.status(500).json(slack.err(req, err)))
 })
 
 app.delete('/v1/batons/:id', (req, res) => {
@@ -72,7 +66,6 @@ app.delete('/v1/batons/:id', (req, res) => {
   res.status(204).send()
 })
 
-// FIXME - borked
 app.get('/v1/help/:cmd', (req, res) => {
   res.json(slack.resp(req, {
     pass   : 'Keyword: ```pass```\nExample: ```pass https://api.slack.com/bot-users [slack, bots, api]```',
@@ -89,6 +82,11 @@ app.get('/v1/help/:cmd', (req, res) => {
 // | |_) | (_) | (_) | |_\__ \ |_| | | (_| | |_) |
 // |____/ \___/ \___/ \__|___/\__|_|  \__,_| .__/ 
 //                                         |_|    
+
+app.use(/\?slack$/, (req, res, next) => {
+  req.body = slack.cmd(req)
+  next()
+})
 
 app.use((req, res, next) => {
   const err = new Error('Not Found')
