@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //
 
 app.get('/', (req, res) => {
-  res.send(slack.msg(req, 'Commands: config pass drop relate help'))
+  res.send(slack.resp(req, 'Commands: config pass drop relate help'))
 })
 
 app.get('/v1/batons', (req, res) => {
@@ -48,8 +48,14 @@ app.get('/v1/batons', (req, res) => {
 })
 
 app.post('/v1/batons', (req, res) => {
-  baton.pass(req.body)
-    .then(btn  => res.json(slack.msg(req, 'Passed a baton!: ' + btn.label + ' ' + btn.link, 'sparkles')))
+  let newBaton = req.body
+
+  if ('cmd' in req.query) {
+    newBaton = slack.cmd(req)
+  }
+
+  baton.pass(newBaton)
+    .then(btn  => res.json(slack.resp(req, 'Passed a baton!: ' + btn.label + ' ' + btn.link, 'sparkles')))
     .catch(err => res.status(500).json(slack.err(err)))
 })
 
@@ -64,8 +70,9 @@ app.delete('/v1/batons/:id', (req, res) => {
   res.status(204).send()
 })
 
+// FIXME - borked
 app.get('/v1/help/:cmd', (req, res) => {
-  res.send(slack.msg(req, {
+  res.json(slack.resp(req, {
     pass   : 'Keyword: ```pass```\nExample: ```pass https://api.slack.com/bot-users [slack, bots, api]```',
     drop   : 'How to drop a baton',
     relate : 'How to relate tags',
