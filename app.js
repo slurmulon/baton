@@ -7,9 +7,8 @@ import favicon      from 'serve-favicon'
 import cookieParser from 'cookie-parser'
 import bodyParser   from 'body-parser'
 
-import emoji from 'node-emoji'
-
 import * as baton from './lib/src/baton'
+import * as slack from './lib/src/slack'
 
 //   ____             __ _       
 //  / ___|___  _ __  / _(_) __ _ 
@@ -30,10 +29,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-// response format
-function slackMsg(text: String) { return {text: emoji.emojify('[:sparkles: baton] ' + text)} }
-function slackErr(text: String) { return {text: emoji.emojify('[ :bomb: baton] '    + text)} }
-
 //  ____             _            
 // |  _ \ ___  _   _| |_ ___  ___ 
 // | |_) / _ \| | | | __/ _ \/ __|
@@ -42,48 +37,36 @@ function slackErr(text: String) { return {text: emoji.emojify('[ :bomb: baton] '
 //
 
 app.get('/', (req, res) => {
-  res.send(slackMsg('Commands: config pass drop relate help'))
+  res.send(slack.msg(req, 'Commands: config pass drop relate help'))
 })
 
 app.get('/v1/batons', (req, res) => {
   baton.all()
-    .then(btns => {
-      res.send(btns)
-    })
-    .catch(err => {
-      res.status(500).send(slackErrMsg(err))
-    })
+    .then(btns => res.json(btns.map(btn => slack.item(req, btn))))
+    .then(btns => res.json(btns))
+    .catch(err => res.status(500).send(slack.err(err)))
 })
 
 app.post('/v1/batons', (req, res) => {
   baton.pass(req.body)
-    .then(btn => {
-      res.send(slackMsg('Passed a baton!: ' + btn.label + ' ' + btn.link))
-    })
-    .catch(err => {
-      res.status(500).send(slackErr(err))
-    })
+    .then(btn  => res.json(slack.msg(req, 'Passed a baton!: ' + btn.label + ' ' + btn.link, 'sparkles')))
+    .catch(err => res.status(500).json(slack.err(err)))
 })
 
-app.get('/v1/batons/search', (req, res) => {
-  baton.search({label: req.params.label, tags: req.params.tags})
-    .then(btsn => {
-      res.send(btsn)
-    })
-    .catch(err => {
-      res.status(500).send(slackErrMsg(err))
-    })
+app.get('/v1/batons/find', (req, res) => {
+  baton.find({label: req.params.label, tags: req.params.tags})
+    .then(btsn => res.json(btsn))
+    .catch(err => res.status(500).json(slack.err(err)))
 })
 
 app.delete('/v1/batons/:id', (req, res) => {
   baton.drop(req.params.id)
-
   res.status(204).send()
 })
 
 app.get('/v1/help/:cmd', (req, res) => {
-  res.send(slackMsg({
-    pass   : 'How to pass a baton',
+  res.send(slack.msg(req, {
+    pass   : 'Keyword: ```pass```\nExample: ```pass https://api.slack.com/bot-users [slack, bots, api]```',
     drop   : 'How to drop a baton',
     relate : 'How to relate tags',
     search : 'How to search by tag',
@@ -119,5 +102,5 @@ module.exports = app
 
 // listen
 app.listen(port, () => {
-  // console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env)
+  console.log('Baton Bot server listening...')
 })
