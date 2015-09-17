@@ -1,2 +1,2 @@
-web: npm start
 db: rethinkdb
+web: npm start
