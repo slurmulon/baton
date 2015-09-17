@@ -50,7 +50,7 @@ app.get('/v1/batons', (req, res) => {
 app.post('/v1/batons', (req, res) => {
   let newBaton = req.body
 
-  if ('cmd' in req.query) {
+  if ('slack' in req.query) {
     newBaton = slack.cmd(req)
   }
 
