@@ -17,8 +17,9 @@ import * as slack from './lib/src/slack'
 //  \____\___/|_| |_|_| |_|\__, |
 //                         |___/
  
-const app  = express()
-const port = process.env.PORT || 3000
+const app    = express()
+const port   = process.env.PORT || 3000
+const router = express.Router()
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
@@ -35,6 +36,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 // |  _ < (_) | |_| | ||  __/\__ \
 // |_| \_\___/ \__,_|\__\___||___/
 //
+
+// slack middleware (determines if request is meant for slack with ?slack)
+app.use((req, res, next) => {
+  if ('slack' in req.query) {
+    req.body = slack.cmd(req)
+  }
+
+  next()
+})
 
 app.get('/', (req, res) => {
   res.send(slack.resp(req, 'Commands: config pass drop relate help'))
@@ -74,34 +84,6 @@ app.get('/v1/help/:cmd', (req, res) => {
     search : 'How to search by tag',
     error  : 'Command must be specified'
   }[req.params.cmd || 'error'] || 'Unsupported command'))
-})
-
-//  ____              _       _                   
-// | __ )  ___   ___ | |_ ___| |_ _ __ __ _ _ __  
-// |  _ \ / _ \ / _ \| __/ __| __| '__/ _` | '_ \ 
-// | |_) | (_) | (_) | |_\__ \ |_| | | (_| | |_) |
-// |____/ \___/ \___/ \__|___/\__|_|  \__,_| .__/ 
-//                                         |_|    
-
-app.use(/\?slack$/, (req, res, next) => {
-  req.body = slack.cmd(req)
-  next()
-})
-
-app.use((req, res, next) => {
-  const err = new Error('Not Found')
-  err.status = 404
-  next(err)
-})
-
-if (app.get('env') === 'development') {
-  app.use((err, req, res, next) => {
-    res.status(err.status || 500).send(err.message)
-  })
-}
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500)
 })
 
 // export
