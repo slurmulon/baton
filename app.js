@@ -54,6 +54,8 @@ app.post('/v1/batons', (req, res) => {
     newBaton = slack.cmd(req)
   }
 
+  console.log('[baton] Passing new baton...', newBaton)
+
   baton.pass(newBaton)
     .then(btn  => res.json(slack.resp(req, 'Passed a baton!: ' + btn.label + ' ' + btn.link, 'sparkles')))
     .catch(err => res.status(500).json(slack.err(err)))
