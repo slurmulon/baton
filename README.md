@@ -11,7 +11,7 @@
 When we have to wrangle links that enable us to do our jobs better, it's common to:
 
 * Unintentionally hoard the information in a local bookmark repo (Ctrl + D)
-* Place the links in Wikis that aren't version controlled and have limited functionality (which in a few ways is good)
+* Place the links in Wikis that aren't version controlled (which in a few ways is good) and have limited functionality
 * Rely on crufty search history and hope that those useful links will just be there forever and easy to find
 * Combine one or more of the above approaches, making the problem even worse
 
