@@ -37,31 +37,31 @@ app.get('/', (req, res) => {
 app.get('/v1/batons', auth.required((req, res) => {
   baton.all()
     .then(btns => res.json(btns.map(btn => slack.item(req, btn))))
-    .catch(err => res.status(500).send(slack.err(req, err)))
+    .catch(errorResp(res))
 }))
 
 app.post('/v1/batons', auth.required((req, res) => {
   baton.pass(req.body)
     .then(btn  => res.json(slack.msg(req, 'Passed a baton!: ' + btn.link, 'sparkles')))
-    .catch(err => res.status(500).json(slack.err(req, err)))
+    .catch(errorResp(res))
 }))
 
 app.get('/v1/batons/find', auth.required((req, res) => {
   baton.find(req.body.label, req.body.tags)
     .then(btsn => res.json(btsn))
-    .catch(err => res.status(500).json(slack.err(req, err)))
+    .catch(errorResp(res))
 }))
 
 app.delete('/v1/batons/:id', auth.required((req, res) => {
   baton.drop(req.params.id)
     .then((  ) => res.status(204).send())
-    .catch(err => res.status(500).json(slack.err(req, err)))
+    .catch(errorResp(res))
 }))
 
 app.post('/v1/teams', (req, res) => {
   baton.register(req.body.token, req.body.team_id, req.body.team_domain)
     .then(auth => res.json(auth))
-    .catch(err => res.status(500).json())
+    .catch(err => res.status(400).json())
 })
 
 app.get('/v1/help/:cmd', (req, res) => {
@@ -73,7 +73,7 @@ app.get('/v1/help/:cmd', (req, res) => {
   }[req.params.cmd || 'error'] || 'Unsupported command'))
 })
 
-const errorRes = (res) => (err) => res.status(500).json(slack.err(req, err))
+const errorResp = (res) => (err) => res.status(400).json(slack.err(req, err))
 
 // export
 module.exports = app
