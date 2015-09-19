@@ -18,7 +18,7 @@ app.set('view engine', 'jade')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+// app.use(express.static(path.join(__dirname, 'public')))
 
 // slack middleware. determines if request is a command/hook made from slack-like client
 app.use((req, res, next) => {
@@ -63,6 +63,8 @@ app.post('/v1/teams', (req, res) => {
     .then(auth => res.json(auth))
     .catch(err => res.status(400).json())
 })
+
+// app.put('/v1/teams/reset')
 
 app.get('/v1/help/:cmd', (req, res) => {
   res.json(slack.msg(req, {
