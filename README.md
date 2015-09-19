@@ -68,7 +68,7 @@ Drop (delete) a baton:
 
 `/baton drop "Guide to $scope"`
 
-## :ear: Hooks
+## :sound: Hooks
 
 baton also supports Slack's Outgoing Webhook API, allowing it to react to trigger words mentioned in your channel.
 This allows you to communicate resources with your team while having them implicitly captured in the background:
