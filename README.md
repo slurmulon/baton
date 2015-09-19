@@ -6,7 +6,7 @@
 
 `/baton pass https://talks.golang.org/2012/waza.slide#1 ["golang", "concurrency", "parallelism"]`
 
-## Rationale
+## :grey_question: Rationale
 
 When we have to wrangle all the links that enable us to do our jobs better, it's common to:
 
@@ -17,7 +17,7 @@ When we have to wrangle all the links that enable us to do our jobs better, it's
 
 The goal of baton is to make it easier for teams to share and manage links that help accelerate productivity
 
-## Setup
+## :wrench: Setup
 
 ### Hosted
 
@@ -39,9 +39,7 @@ A guide on setting up a Dokku image with RethinkDB can be found here:  https://r
 
 ---
 
-### :heavy_exclamation_mark: Note
-
-Independent of your setup method, you must also create and configure at least one of the following slack integrations:
+Regardless of your setup method, you must also create and configure at least one of the following slack integrations:
 
 * Outgoing WebHook: https://slack.com/services/new/outgoing-webhook
   - `URL` -> `http://baton.apps.madhax.io/v1/batons?slack`
@@ -54,7 +52,7 @@ If deploying your own baton instance, be sure to replace the above URLs with you
 
 (The `?slack` query param tells baton to explicitly parse incoming requests as slack text/commands. Needs improvement to say the least.)
 
-## Command
+## :guardsman: Command
 
 The most straight foward way to create a baton is via command:
 
@@ -70,7 +68,7 @@ Drop (delete) a baton:
 
 `/baton drop "Guide to $scope"`
 
-## Hooks
+## :ear: Hooks
 
 baton also supports Slack's Outgoing Webhook API, allowing it to react to trigger words mentioned in your channel.
 This allows you to communicate resources with your team while having them implicitly captured in the background:
@@ -84,7 +82,7 @@ The above message, when made in a public Slack channel, is synonymous with the f
 > **Note**
 > A current limitation with hooks is not being able to provide a label for the baton
 
-## TODO
+## :telescope: TODO
 
 - [ ] Prevent bad links (4XX) from being passed
 - [ ] Incoming hook notifications for new batons
