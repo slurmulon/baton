@@ -6,7 +6,7 @@
 
 `/baton pass https://talks.golang.org/2012/waza.slide#1 ["golang", "concurrency", "parallelism"]`
 
-## :grey_question: Rationale
+## Rationale
 
 When we have to wrangle all the links that enable us to do our jobs better, it's common to:
 
