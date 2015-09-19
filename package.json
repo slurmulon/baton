@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint app.js",
     "start": "babel-node app.js",
-    "test": "mocha --reporter nyan --compilers js:mocha-traceur lib/tests/",
+    "test": "mocha --reporter nyan --compilers js:babel/register lib/tests/",
     "auto-start": "nodemon --exec \"npm run lint && npm start\" --ignore public/js"
   },
   "dependencies": {

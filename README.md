@@ -8,7 +8,7 @@
 
 ## Rationale
 
-When we have to wrangle links that enable us to do our jobs better, it's common to:
+When we have to wrangle all the links that enable us to do our jobs better, it's common to:
 
 * Unintentionally hoard the information in a local bookmark repo (Ctrl + D)
 * Place the links in Wikis that aren't version controlled (which in a few ways is good) and have limited functionality
@@ -23,7 +23,7 @@ baton currently has a public instance deployed at http://baton.apps.madhax.io
 
 Team registration can be performed via a `POST` to `http://baton.apps.madhax.io/v1/teams`:
 
-`$ curl -H "Content-Type: application/json" -X POST -d '{"token": "YOUR_SLACK_TOKEN", "team_id": "T04L487UB", "team_domain": "madhax", "service_id": "10842527789"}' http://baton.apps.madhax.io/v1/teams?slack`
+`$ curl -H "Content-Type: application/json" -X POST -d '{"token": "YOUR_SLACK_TOKEN", "team_id": "YOUR_TEAM_ID", "team_domain": "YOUR_TEAM_SUB_DOMAIN"}' http://baton.apps.madhax.io/v1/teams`
 
 and yes, I will eventually get to a registration page :see_no_evil:
 
@@ -66,6 +66,6 @@ The above message, when made in a public Slack channel, is synonymous with the f
 ## TODO
 
 - [ ] Prevent bad links (4XX) from being passed
-- [ ] Incoming notifications for new batons
+- [ ] Incoming hook notifications for new batons
 - [ ] Allow users to browse batons by label/tag with a regex pattern
 - [ ] Allow users to browse related resources across all registered teams (`find` global flag)
