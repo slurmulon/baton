@@ -1,10 +1,10 @@
 # :bookmark: baton
 
-> Easily share, capture and tag links in Slack
+> Easily share, capture and tag links with your team in Slack
 
 ---
 
-`/baton pass "Concurrency is not parallelism" https://talks.golang.org/2012/waza.slide#1 ["golang", "code", "concurrency", "cs"]`
+`/baton pass https://talks.golang.org/2012/waza.slide#1 ["golang", "concurrency", "parallelism"]`
 
 ## Rationale
 
@@ -19,6 +19,8 @@ The goal of baton is to make it easier for teams to share and manage links that 
 
 ## Setup
 
+### Hosted
+
 baton currently has a public instance deployed at http://baton.apps.madhax.io
 
 Team registration can be performed via a `POST` to `http://baton.apps.madhax.io/v1/teams`:
@@ -29,9 +31,28 @@ and yes, I will eventually get to a registration page :see_no_evil:
 
 ---
 
+### Custom
+
 If you would like to set up your own instance of baton, I recommend using [DigitalOcean](http://digitalocean.com) and the [RethinkDB Plugin for Dokku](https://github.com/stuartpb/dokku-rethinkdb-plugin).
 
 A guide on setting up a Dokku image with RethinkDB can be found here:  https://rethinkdb.com/blog/dokku-deployment/
+
+---
+
+### :heavy_exclamation_mark: Note
+
+Independent of your setup method, you must also create and configure at least one of the following slack integrations:
+
+* Outgoing WebHook: https://slack.com/services/new/outgoing-webhook
+  - `URL` -> `http://baton.apps.madhax.io/v1/batons?slack`
+* Command: https://madhax.slack.com/services/new/slash-commands
+  - `pass` -> `POST http://baton.apps.madhax.io/v1/batons?slack`
+  - `drop` -> `DELETE http://baton.apps.madhax.io/v1/batons?slack`
+  - `find` -> `GET http://baton.apps.madhax.io/v1/batons?slack`
+
+If deploying your own baton instance, be sure to replace the above URLs with your own.
+
+(The `?slack` query param tells baton to explicitly parse incoming requests as slack text/commands. Needs improvement to say the least.)
 
 ## Command
 
