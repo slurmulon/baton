@@ -54,7 +54,7 @@ app.get('/v1/batons/find', auth.required((req, res) => {
 
 app.delete('/v1/batons/:id', auth.required((req, res) => {
   baton.drop(req.params.id)
-    .then((  ) => res.status(204).send())
+    .then(res.status(204).send)
     .catch(errorResp(res))
 }))
 
