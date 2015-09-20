@@ -18,7 +18,7 @@ app.set('view engine', 'jade')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // slack middleware. determines if request is a command/hook made from slack-like client
 app.use((req, res, next) => {
@@ -42,7 +42,7 @@ app.get('/v1/batons', auth.required((req, res) => {
 
 app.post('/v1/batons', auth.required((req, res) => {
   baton.pass(req.body)
-    .then(btn  => res.json(slack.msg(req, 'Passed a baton!: ' + btn.link, 'sparkles')))
+    .then(btn => res.json(slack.msg(req, 'Passed a baton!: ' + btn.link, 'sparkles')))
     .catch(errorResp(res))
 }))
 
