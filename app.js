@@ -47,7 +47,7 @@ app.post('/v1/batons', auth.required((req, res) => {
 }))
 
 app.get('/v1/batons/find', auth.required((req, res) => {
-  baton.find(req.body.label, req.body.tags)
+  baton.byTag(req.body.tag)
     .then(btsn => res.json(btsn))
     .catch(errorResp(res))
 }))
@@ -58,13 +58,15 @@ app.delete('/v1/batons/:id', auth.required((req, res) => {
     .catch(errorResp(res))
 }))
 
+// TODO -app.get('/v1/tags')
+
 app.post('/v1/teams', (req, res) => {
   baton.register(req.body.token, req.body.team_id, req.body.team_domain)
     .then(auth => res.json(auth))
     .catch(err => res.status(400).json())
 })
 
-// app.put('/v1/teams/reset')
+// TODO - app.put('/v1/teams/reset')
 
 app.get('/v1/help/:cmd', (req, res) => {
   res.json(slack.msg(req, {

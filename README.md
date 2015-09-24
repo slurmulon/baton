@@ -58,7 +58,7 @@ The most straight foward way to create a baton is via command:
 
 Pass (create) a baton:
 
-`/baton pass "Guide to $scope" https://github.com/angular/angular.js/wiki/Understanding-Scopes ["angular", "js", "scope", "framework"]`
+`/baton pass https://github.com/angular/angular.js/wiki/Understanding-Scopes ["angular", "js", "scope", "framework"]`
 
 Discover other batons (by tag) passed by your team:
 
@@ -79,12 +79,10 @@ The above message, when made in a public Slack channel, is synonymous with the f
 
 `/baton pass https://github.com/lukehoban/es6features ['js', 'es6']`
 
-> **Note**
-> A current limitation with hooks is not being able to provide a label for the baton
-
 ## :telescope: TODO
 
 - [ ] Prevent bad links (4XX) from being passed
+- [ ] Parse labels from slack text messages (labels temporarily disabled for now for consistency)
 - [ ] Incoming hook notifications for new batons
 - [ ] Allow users to browse batons by label/tag with a regex pattern
 - [ ] Allow users to browse related resources across all registered teams (`find` global flag)
