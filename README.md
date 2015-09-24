@@ -19,7 +19,7 @@ The goal of baton is to make it easier for teams to share and manage links that 
 
 ## :wrench: Setup
 
-### Hosted
+### Public
 
 baton currently has a public instance deployed at http://baton.apps.madhax.io
 
@@ -81,7 +81,7 @@ The above message, when made in a public Slack channel, is synonymous with the f
 
 ## :telescope: TODO
 
-- [ ] Prevent bad links (4XX) from being passed
+- [X] Prevent bad links (4XX) from being passed
 - [ ] Parse labels from slack text messages (labels temporarily disabled for now for consistency)
 - [ ] Incoming hook notifications for new batons
 - [ ] Allow users to browse batons by more than one tag
