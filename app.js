@@ -62,7 +62,7 @@ app.delete('/v1/batons/:id', auth.required((req, res) => {
 
 app.get('/v1/tags', auth.required((req, res) => {
   baton.allTags()
-    .then(tags => res.json(tags))
+    .then(tags => res.json(slack.msg(req, '' + tags.map(t => ` ${t}`))))
     .catch(errorResp(res))
 }))
 
