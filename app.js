@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 
 app.get('/v1/batons', auth.required((req, res) => {
   baton.all()
-    .then(btns => res.json(btns.map(btn => slack.item(req, btn))))
+    .then(btns => res.json(slack.items(req, btns)))
     .catch(errorResp(res))
 }))
 
@@ -50,7 +50,7 @@ app.post('/v1/batons', auth.required((req, res) => {
 
 app.get('/v1/batons/find', auth.required((req, res) => {
   baton.byTag(req.body.tag)
-    .then(btsn => res.json(btsn))
+    .then(btns => res.json(slack.items(req, btns)))
     .catch(errorResp(res))
 }))
 
@@ -83,7 +83,11 @@ app.get('/v1/help/:cmd', (req, res) => {
   }[req.params.cmd || 'error'] || 'Unsupported command'))
 })
 
-const errorResp = (req, res) => (err) => res.status(400).json(slack.err(req, err))
+const errorResp = (req, res) => (err) => {
+  console.log('[baton:ERROR] An error occured while formatting API response', err);
+
+  return res.status(400).json(slack.err(req, err))
+}
 
 // export
 module.exports = app
