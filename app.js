@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 
 // routes
 app.get('/', (req, res) => {
-  res.send(slack.msg(req, 'Welcome to baton, an API for easy resource sharing in Slack! Commands: config, pass, drop, relate, help'))
+  res.send(slack.msg(req, 'Welcome to baton, an API for easy resource sharing in Slack! Commands: pass, drop, find, help'))
 })
 
 app.get('/v1/batons', auth.required((req, res) => {
