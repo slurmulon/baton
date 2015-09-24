@@ -60,7 +60,11 @@ app.delete('/v1/batons/:id', auth.required((req, res) => {
     .catch(errorResp(res))
 }))
 
-// TODO -app.get('/v1/tags')
+app.get('/v1/tags', auth.required((req, res) => {
+  baton.allTags()
+    .then(tags => res.json(tags))
+    .catch(errorResp(res))
+}))
 
 app.post('/v1/teams', (req, res) => {
   baton.register(req.body.token, req.body.team_id, req.body.team_domain)
