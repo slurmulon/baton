@@ -41,9 +41,11 @@ app.get('/v1/batons', auth.required((req, res) => {
 }))
 
 app.post('/v1/batons', auth.required((req, res) => {
-  baton.pass(req.body)
-    .then(btn => res.json(slack.msg(req, 'Passed a baton!: ' + btn.link, 'sparkles')))
-    .catch(errorResp(res))
+  return baton.pass(req.body)
+    .then(btn => {
+      res.json(slack.msg(req, 'Passed a baton!: ' + btn.link, 'sparkles'))
+    })
+    .catch(errorResp(req, res))
 }))
 
 app.get('/v1/batons/find', auth.required((req, res) => {
@@ -77,7 +79,7 @@ app.get('/v1/help/:cmd', (req, res) => {
   }[req.params.cmd || 'error'] || 'Unsupported command'))
 })
 
-const errorResp = (res) => (err) => res.status(400).json(slack.err(req, err))
+const errorResp = (req, res) => (err) => res.status(400).json(slack.err(req, err))
 
 // export
 module.exports = app
