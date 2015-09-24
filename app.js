@@ -2,7 +2,6 @@
 
 import express      from 'express'
 import path         from 'path'
-import cookieParser from 'cookie-parser'
 import bodyParser   from 'body-parser'
 
 import * as baton from './lib/src/baton'
@@ -12,17 +11,14 @@ import * as auth  from './lib/src/auth'
 const app  = express()
 const port = process.env.PORT || 3000
 
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade')
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // slack middleware. determines if request is a command/hook made from slack-like client
 app.use((req, res, next) => {
   if ('slack' in req.query) {
+    // TODO - instead redirect to /v1/slack/batons
     req.body = slack.cmd(req)
   }
 
@@ -78,8 +74,8 @@ app.get('/v1/help/:cmd', (req, res) => {
   res.json(slack.msg(req, {
     pass   : 'Create (pass) a baton: ```pass https://api.slack.com/bot-users [slack, bots, api]```',
     drop   : 'Delete (drop) a baton: ```drop [id|label|url]```',
-    list   : 'List all team batons: ```list```'
     find   : 'Browse batons by tags: ```find [tag]```',
+    list   : 'List all team batons: ```list```',
     error  : 'Command must be specified'
   }[req.params.cmd || 'error'] || 'Unsupported command'))
 })
