@@ -62,7 +62,7 @@ Pass (create) a baton:
 
 Discover other batons (by tag) passed by your team:
 
-`/baton find ["js"]`
+`/baton find js`
 
 Drop (delete) a baton:
 
@@ -84,5 +84,6 @@ The above message, when made in a public Slack channel, is synonymous with the f
 - [ ] Prevent bad links (4XX) from being passed
 - [ ] Parse labels from slack text messages (labels temporarily disabled for now for consistency)
 - [ ] Incoming hook notifications for new batons
+- [ ] Allow users to browse batons by more than one tag
 - [ ] Allow users to browse batons by label/tag with a regex pattern
 - [ ] Allow users to browse related resources across all registered teams (`find` global flag)
