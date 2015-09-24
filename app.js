@@ -78,7 +78,8 @@ app.get('/v1/help/:cmd', (req, res) => {
   res.json(slack.msg(req, {
     pass   : 'Create (pass) a baton: ```pass https://api.slack.com/bot-users [slack, bots, api]```',
     drop   : 'Delete (drop) a baton: ```drop [id|label|url]```',
-    find   : 'Browse batons by tags: ```batons [label|tag(s)]```',
+    list   : 'List all team batons: ```list```'
+    find   : 'Browse batons by tags: ```find [tag]```',
     error  : 'Command must be specified'
   }[req.params.cmd || 'error'] || 'Unsupported command'))
 })

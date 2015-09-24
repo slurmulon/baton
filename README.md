@@ -46,7 +46,8 @@ Regardless of your setup method, you must also create and configure at least one
 * Command: https://madhax.slack.com/services/new/slash-commands
   - `pass` -> `POST http://baton.apps.madhax.io/v1/batons?slack`
   - `drop` -> `DELETE http://baton.apps.madhax.io/v1/batons?slack`
-  - `find` -> `GET http://baton.apps.madhax.io/v1/batons?slack`
+  - `find` -> `GET http://baton.apps.madhax.io/v1/batons/find?slack`
+  - `list` -> `GET http://baton.apps.madhax.io/v1/batons?slack`
 
 If deploying your own baton instance, be sure to replace the above URLs with your own.
 
