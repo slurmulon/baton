@@ -83,7 +83,7 @@ The above message, when made in a public Slack channel, is synonymous with the f
 ## :telescope: TODO
 
 - [X] Prevent bad links (4XX) from being passed
-- [~] Decouple baton API from slack API
+- [ ] Decouple baton API from slack API
 - [ ] Parse labels from slack text messages (labels temporarily disabled for now for consistency)
 - [ ] Incoming hook notifications for new batons
 - [ ] Allow users to browse batons by more than one tag
