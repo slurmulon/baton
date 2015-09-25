@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 // slack middleware. determines if request is a command/hook made from slack-like client
 app.use((req, res, next) => {
   if ('slack' in req.query) {
+    console.log('[baton:DEBUG] Incoming slack request', req.body)
     // TODO - instead redirect to /v1/slack/batons
     req.body = slack.cmd(req)
   }
