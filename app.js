@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use((req, res, next) => {
   if ('slack' in req.query) {
     console.log('[baton:DEBUG] Incoming slack request', req.body)
-    // TODO - instead redirect to /v1/slack/batons
+
     req.body = slack.cmd(req)
   }
 
@@ -37,7 +37,7 @@ app.get('/v1/batons', auth.required((req, res) => {
 }))
 
 app.post('/v1/batons', auth.required((req, res) => {
-  return baton.pass(req.body)
+  baton.pass(req.body)
     .then(btn => {
       res.json(slack.msg(req, 'Passed a baton!: ' + btn.link, 'sparkles'))
     })
