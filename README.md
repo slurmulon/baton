@@ -45,7 +45,6 @@ Regardless of your setup method, you must also create and configure at least one
   - `URL` -> `http://baton.apps.madhax.io/v1/batons?slack`
 * Command: https://madhax.slack.com/services/new/slash-commands
   - `pass` -> `POST http://baton.apps.madhax.io/v1/batons?slack`
-  - `drop` -> `DELETE http://baton.apps.madhax.io/v1/batons?slack`
   - `find` -> `GET http://baton.apps.madhax.io/v1/batons/find?slack`
   - `list` -> `GET http://baton.apps.madhax.io/v1/batons?slack`
 
@@ -64,10 +63,6 @@ Pass (create) a baton:
 Discover other batons (by tag) passed by your team:
 
 `/baton find js`
-
-Drop (delete) a baton:
-
-`/baton drop "Guide to $scope"`
 
 ## :sound: Hooks
 
@@ -89,3 +84,4 @@ The above message, when made in a public Slack channel, is synonymous with the f
 - [ ] Allow users to browse batons by more than one tag
 - [ ] Allow users to browse batons by label/tag with a regex pattern
 - [ ] Allow users to browse related resources across all registered teams (`find` global flag)
+- [ ] Hypermedia

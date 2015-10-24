@@ -30,20 +30,6 @@ app.get('/', (req, res) => {
   res.send(slack.msg(req, 'Welcome to baton, an API for easy resource sharing in Slack! Commands: pass, drop, find, help'))
 })
 
-app.post('/v1/slack-command', (req, res) => {
-  const cmd  = req.body.command
-  const args = req.body.text
-
-  const resource = {
-    pass  : {url: '/v1/batons', method: 'post'},
-    // drop  : {url: '/v1/batons:id', method: 'delete'}
-    find  : {url: '/v1/batons/find', method: 'get'},
-    list  : {url: '/v1/batons', method: 'get'},
-    tags  : {url: '/v1/tags', method: 'get'}
-    error : ()
-  }[cmd || 'error']
-})
-
 // app.get('/v1/batons', auth.required((req, res) => {
 //   baton.all()
 //     .then(btns => res.json(slack.items(req, btns)))
