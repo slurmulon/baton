@@ -84,4 +84,5 @@ The above message, when made in a public Slack channel, is synonymous with the f
 - [ ] Allow users to browse batons by more than one tag
 - [ ] Allow users to browse batons by label/tag with a regex pattern
 - [ ] Allow users to browse related resources across all registered teams (`find` global flag)
+- [ ] Import/export banks of link collections
 - [ ] Hypermedia
