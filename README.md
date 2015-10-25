@@ -42,15 +42,11 @@ A guide on setting up a Dokku image with RethinkDB can be found here:  https://r
 Regardless of your setup method, you must also create and configure at least one of the following slack integrations:
 
 * Outgoing WebHook: https://slack.com/services/new/outgoing-webhook
-  - `URL` -> `http://baton.apps.madhax.io/v1/batons?slack`
+  - `URL` -> `http://baton.apps.madhax.io/v1/slack/`
 * Command: https://madhax.slack.com/services/new/slash-commands
-  - `pass` -> `POST http://baton.apps.madhax.io/v1/batons?slack`
-  - `find` -> `GET http://baton.apps.madhax.io/v1/batons/find?slack`
-  - `list` -> `GET http://baton.apps.madhax.io/v1/batons?slack`
+  - `baton` -> `POST http://baton.apps.madhax.io/v1/slack/`
 
 If deploying your own baton instance, be sure to replace the above URLs with your own.
-
-(The `?slack` query param tells baton to explicitly parse incoming requests as slack text/commands. Needs improvement to say the least.)
 
 ## :guardsman: Command
 
@@ -64,16 +60,20 @@ Discover other batons (by tag) passed by your team:
 
 `/baton find js`
 
+Explore your team's tag cloud:
+
+`/baton tags`
+
 ## :sound: Hooks
 
 baton also supports Slack's Outgoing Webhook API, allowing it to react to trigger words mentioned in your channel.
 This allows you to communicate resources with your team while having them implicitly captured in the background:
 
-_"pass hey @bob check out this feature list I found for ['js', 'es6']: https://github.com/lukehoban/es6features"_
+_"pass hey @bob check out this feature list I found for ["js", "es6"]: https://github.com/lukehoban/es6features"_
 
 The above message, when made in a public Slack channel, is synonymous with the following command:
 
-`/baton pass https://github.com/lukehoban/es6features ['js', 'es6']`
+`/baton pass https://github.com/lukehoban/es6features ["js", "es6"]`
 
 ## :telescope: TODO
 
