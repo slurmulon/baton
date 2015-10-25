@@ -45,7 +45,6 @@ Regardless of your setup method, you must also create and configure at least one
   - `URL` -> `http://baton.apps.madhax.io/v1/batons?slack`
 * Command: https://madhax.slack.com/services/new/slash-commands
   - `pass` -> `POST http://baton.apps.madhax.io/v1/batons?slack`
-  - `drop` -> `DELETE http://baton.apps.madhax.io/v1/batons?slack`
   - `find` -> `GET http://baton.apps.madhax.io/v1/batons/find?slack`
   - `list` -> `GET http://baton.apps.madhax.io/v1/batons?slack`
 
@@ -65,10 +64,6 @@ Discover other batons (by tag) passed by your team:
 
 `/baton find js`
 
-Drop (delete) a baton:
-
-`/baton drop "Guide to $scope"`
-
 ## :sound: Hooks
 
 baton also supports Slack's Outgoing Webhook API, allowing it to react to trigger words mentioned in your channel.
@@ -83,9 +78,10 @@ The above message, when made in a public Slack channel, is synonymous with the f
 ## :telescope: TODO
 
 - [X] Prevent bad links (4XX) from being passed
-- [ ] Decouple baton API from slack API
+- [X] Decouple baton API from slack API
 - [ ] Parse labels from slack text messages (labels temporarily disabled for now for consistency)
 - [ ] Incoming hook notifications for new batons
 - [ ] Allow users to browse batons by more than one tag
 - [ ] Allow users to browse batons by label/tag with a regex pattern
 - [ ] Allow users to browse related resources across all registered teams (`find` global flag)
+- [ ] Hypermedia
