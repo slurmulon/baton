@@ -1,4 +1,4 @@
-# :bookmark: baton
+# :tanabata_tree: baton
 
 > Easily share, capture and tag links with your team in Slack
 
