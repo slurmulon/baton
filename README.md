@@ -25,7 +25,9 @@ baton currently has a public instance deployed at http://baton.apps.madhax.io
 
 Team registration can be performed via a `POST` to `http://baton.apps.madhax.io/v1/teams`:
 
-`$ curl -H "Content-Type: application/json" -X POST -d '{"token": "YOUR_SLACK_TOKEN", "team_id": "YOUR_TEAM_ID", "team_domain": "YOUR_TEAM_SUB_DOMAIN"}' http://baton.apps.madhax.io/v1/teams`
+```bash
+$ curl -H "Content-Type: application/json" -X POST -d '{"token": "YOUR_SLACK_TOKEN", "team_id": "YOUR_TEAM_ID", "team_domain": "YOUR_TEAM_SUB_DOMAIN"}' http://baton.apps.madhax.io/v1/teams
+```
 
 and yes, I will eventually get to a registration page :see_no_evil:
 
@@ -47,6 +49,14 @@ Regardless of your setup method, you must also create and configure at least one
   - `baton` -> `POST http://baton.apps.madhax.io/v1/slack/`
 
 If deploying your own baton instance, be sure to replace the above URLs with your own.
+
+You can specify your channel's webhook API URL via:
+
+```bash
+export BATON_HOOK_URL='http://your.url'
+```
+
+This URL can be found in Slack's Incoming Webhooks Integration page.
 
 ## :guardsman: Command
 
